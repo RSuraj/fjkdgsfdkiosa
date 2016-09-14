@@ -12,7 +12,7 @@
 <html >
   <head>
     <meta charset="UTF-8">
-    <title>Material design navigation</title>
+    <title>Cars4U</title>
     <link href='http://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
     
      <!-- Font Awesome -->
@@ -30,7 +30,6 @@
         <script src="js/index1.js"></script>
         <!-- JQuery -->
     <script type="text/javascript" src="js/jquery-2.2.3.min.js"></script>
-
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="js/tether.min.js"></script>
 
@@ -48,6 +47,7 @@
 
            /*fuction to display company name and car model list menu  seperate fuction is used since it returns two value 
              table and select menu of mode*/
+           document.getElementById('more').style.display = "none";
             if (str == "") { 
                 document.getElementById("txtHint").innerHTML = "";
                 return;
@@ -82,7 +82,7 @@
         function showModel(str,count) {
             /*function to display selection list according to condition set by user.All conditions except company name
              use this function*/
-
+              document.getElementById('more').style.display = "none";
             if (str == "") {
                 document.getElementById("txtHint").innerHTML = "";
                 return;
@@ -118,6 +118,9 @@
              * .......-*/
             document.getElementById('tableDisplay').style.display = "block";
             document.getElementById('txtHint').style.display = "none";
+            document.getElementById('more').style.display = "none";
+            
+            
             if (str == "") {
                 document.getElementById("tableDisplay").innerHTML = "";
                 return;
@@ -135,6 +138,7 @@
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 
                     document.getElementById("tableDisplay").innerHTML = xmlhttp.responseText;
+                   window.scrollTo(0, 0);
                                                                       }
                                                         };
                 xmlhttp.open("GET","viewdata.php?q="+str,true);
@@ -143,12 +147,14 @@
 
         }
         
-          function viewMore(str) {
+         function viewMore(str) {
             /*Fuction to view car details when user select an entry in the selection result.It hides the
              * selection result 
+             * .......-*/
+             document.getElementById('rem').style.display = "none";
             
             if (str == "") {
-                document.getElementById("more").innerHTML = "";
+                document.getElementById("tableDisplay").innerHTML = "";
                 return;
             } 
             else { 
@@ -162,21 +168,21 @@
                      }
                 xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-
+                      document.getElementById('more').style.display = "block";
                     document.getElementById("more").innerHTML = xmlhttp.responseText;
                                                                       }
                                                         };
-                xmlhttp.open("GET","viewmore.php?,true);
+                xmlhttp.open("GET","viewmore.php?q="+str,true);
                 xmlhttp.send();
                 }  
 
         }
-        
         function goBack()
         {
             /*Funtion to hide the car details and view the selection result*/
             document.getElementById('tableDisplay').style.display = "none";//"tableDisplay" is car details
             document.getElementById('txtHint').style.display = "block";//"txtHint"selection result
+             document.getElementById('more').style.display = "block";
         }
                 </script>
 
@@ -189,7 +195,7 @@
       
 
     <nav>
-  <ul>
+        <ul><div id="top"></div>
       
        <?php
                     $_SESSION['scompany']="";
@@ -280,11 +286,12 @@
 
 <div class="wrapper">
      <section>
+     <img src="images/logo.png">    
     <div id="txtHint" style="display:block;"><b></b></div>
      <div id="more" style="display:block;"><b></b></div>
         <div id="tableDisplay" style="display:block;"><b></b></div>
         <div id="pic" style="display:block;">
- 
+            <img src="images/home-1_2.jpg" width="1000px" height="500px" >
      <div class="container">
 
          
